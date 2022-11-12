@@ -13,9 +13,9 @@ router.post("/login", async (req, res) => {
     });
     if (!usuario) return res.status(401).json({ message: "Unauthorized" });
     if (!usuario.validPassword(body.password))
-    return res.status(401).json({ message: "Invalid credentials!" });
-    
-    console.log(usuario.id);
+      return res.status(401).json({ message: "Invalid credentials!" });
+
+    // console.log(usuario.id);
 
     const token = jwt.sign(
       { usuarioId: usuario.id },
@@ -24,10 +24,10 @@ router.post("/login", async (req, res) => {
         expiresIn: process.env.JWT_EXPIRESIN,
       }
     );
-    console.log(token);
+    // console.log(token);
     return res.json({ message: "Athenticated successfully!", token });
   } catch (error) {
-    res.status(400).json({ message: "Error", info: "Sin datos", data: error, tokenU: 'token', jwtS: process.env.JWT_SECRETKEY, jwtE: process.env.JWT_EXPIRESIN });
+    res.status(400).json({ message: "Error", info: "Sin datos", data: error });
   }
 });
 
@@ -39,9 +39,9 @@ router.post("/signup", async (req, res) => {
       where: { email: body.email },
     });
     let rol = await sequelize.models.roles.findOne({
-      where: { clave: 'USR' },
+      where: { clave: "USR" },
     });
-    
+
     // Validation for known is the usuario's email exists
     if (usuario) {
       return res
