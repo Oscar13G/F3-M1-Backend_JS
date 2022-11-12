@@ -1,0 +1,13 @@
+# Application
+PORT=3000
+
+# Authorization
+JWT_SECRETKEY=secretkey
+JWT_EXPIRESIN='8h'
+
+# Database
+DB_USER=root
+DB_PASSWORD=Hola.1234@
+DB_DATABASE=registro_vehicular
+DB_HOST=127.0.0.1
+DB_PORT=3306
