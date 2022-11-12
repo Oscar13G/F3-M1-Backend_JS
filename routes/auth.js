@@ -11,10 +11,11 @@ router.post("/login", async (req, res) => {
     const usuario = await sequelize.models.usuarios.findOne({
       where: { email: body.email },
     });
-
     if (!usuario) return res.status(401).json({ message: "Unauthorized" });
     if (!usuario.validPassword(body.password))
-      return res.status(401).json({ message: "Invalid credentials!" });
+    return res.status(401).json({ message: "Invalid credentials!" });
+    
+    console.log(usuario.id);
 
     const token = jwt.sign(
       { usuarioId: usuario.id },
@@ -23,7 +24,7 @@ router.post("/login", async (req, res) => {
         expiresIn: process.env.JWT_EXPIRESIN,
       }
     );
-
+    console.log(token);
     return res.json({ message: "Athenticated successfully!", token });
   } catch (error) {
     res.status(400).json({ message: "Error", info: "Sin datos", data: error });
