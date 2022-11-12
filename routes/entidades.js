@@ -4,7 +4,7 @@ const sequelize = require("../config/db");
 const permission = require("../middlewares/permission");
 
 // Get all entidades
-router.get("/", permission(1,2), async (req, res) => {
+router.get("/", permission('ADM', 'USR'), async (req, res) => {
   return await sequelize.models.entidades
     .findAndCountAll()
     .then((data) => res.json(data))
@@ -12,7 +12,7 @@ router.get("/", permission(1,2), async (req, res) => {
 });
 
 // Creating a new entidad
-router.post("/", permission(1), async (req, res) => {
+router.post("/", permission('ADM'), async (req, res) => {
   const { body } = req;
   try {
     const entidad = await sequelize.models.entidades.create({
@@ -27,7 +27,7 @@ router.post("/", permission(1), async (req, res) => {
 });
 
 // Update entidad by id
-router.put("/:id", permission(1), async (req, res) => {
+router.put("/:id", permission('ADM'), async (req, res) => {
   const {
     body,
     params: { id },
@@ -49,7 +49,7 @@ router.put("/:id", permission(1), async (req, res) => {
 });
 
 // Delete a entidad by id
-router.delete("/:id", permission(1), async (req, res) => {
+router.delete("/:id", permission('ADM'), async (req, res) => {
   const {
     params: { id },
   } = req;
