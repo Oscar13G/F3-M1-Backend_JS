@@ -7,26 +7,23 @@ const jwt = require("jsonwebtoken");
 router.post("/login", async (req, res) => {
   const { body } = req;
 
-  try {
-    const usuario = await sequelize.models.usuarios.findOne({
-      where: { email: body.email },
-    });
-    if (!usuario) return res.status(401).json({ message: "Unauthorized" });
-    if (!usuario.validPassword(body.password))
-      return res.status(401).json({ message: "Invalid credentials!" });
-    const token = jwt.sign(
-      { usuarioId: usuario.id },
-      process.env.JWT_SECRETKEY,
-      {
-        expiresIn: process.env.JWT_EXPIRESIN,
-      }
-    );
-    // console.log(token);
-    return res.json({ message: "Athenticated successfully!", token });
-  } catch (error) {
-    res.status(400).json({ message: "Error", info: "Sin datos", data: error });
+  if (!body.email && !body.password) {
+    return res.status(400).json({ message: "Error", data: "Sin datos" });
   }
-  // console.log(usuario.id);
+
+  const usuario = await sequelize.models.usuarios.findOne({
+    where: { email: body.email },
+  });
+  if (!usuario) return res.status(401).json({ message: "Unauthorized" });
+  if (!usuario.validPassword(body.password))
+    return res.status(401).json({ message: "Invalid credentials!" });
+  const token = jwt.sign({ usuarioId: usuario.id }, process.env.JWT_SECRETKEY, {
+    expiresIn: process.env.JWT_EXPIRESIN,
+  });
+
+  return res.json({ message: "Athenticated successfully!", token });
+
+  res.status(400).json({ message: "Error", data: error });
 });
 
 router.post("/signup", async (req, res) => {
