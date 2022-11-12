@@ -14,4 +14,7 @@ router.use('/usuarios', authenticate, require('./usuarios'))
 router.use('/vehiculos', authenticate, require('./vehiculos'))
 
 
+// router.use('/usuarios', require('./usuarios'))
+// router.use('/roles', require('./roles'))
+
 module.exports = router

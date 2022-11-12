@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const sequelize = require("../config/db");
+const permission = require("../middlewares/permission");
 
 // Get all placas
-router.get("/", async (req, res) => {
+router.get("/", permission("ADM", "USR"), async (req, res) => {
   return await sequelize.models.placas
     .findAndCountAll()
     .then((data) => res.json(data))
@@ -11,7 +12,7 @@ router.get("/", async (req, res) => {
 });
 
 // Creating a new placa
-router.post("/", async (req, res) => {
+router.post("/", permission("ADM", "USR"),async (req, res) => {
   const { body } = req;
   try {
     const placa = await sequelize.models.placas.create({
@@ -28,7 +29,7 @@ router.post("/", async (req, res) => {
 });
 
 // Update placa by id
-router.put("/:id", async (req, res) => {
+router.put("/:id", permission("ADM", "USR"),async (req, res) => {
   const {
     body,
     params: { id },
@@ -52,7 +53,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete a placa by id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', permission("ADM", "USR"), async (req, res) => {
   const { params: { id } } = req;
   const placa = await sequelize.models.placas.findByPk(id);
   if (!placa) {

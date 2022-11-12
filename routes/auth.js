@@ -37,7 +37,10 @@ router.post("/signup", async (req, res) => {
     let usuario = await sequelize.models.usuarios.findOne({
       where: { email: body.email },
     });
-
+    let rol = await sequelize.models.roles.findOne({
+      where: { clave: 'USR' },
+    });
+    
     // Validation for known is the usuario's email exists
     if (usuario) {
       return res
@@ -51,7 +54,7 @@ router.post("/signup", async (req, res) => {
       apPaterno: body.apPaterno,
       email: body.email,
       password: body.password,
-      rol_id: 2,
+      rol_id: rol.id,
     });
 
     // Saving usuario
