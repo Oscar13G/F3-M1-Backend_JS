@@ -14,16 +14,19 @@ router.post("/login", async (req, res) => {
     if (!usuario) return res.status(401).json({ message: "Unauthorized" });
     if (!usuario.validPassword(body.password))
       return res.status(401).json({ message: "Invalid credentials!" });
+    const token = jwt.sign(
+      { usuarioId: usuario.id },
+      process.env.JWT_SECRETKEY,
+      {
+        expiresIn: process.env.JWT_EXPIRESIN,
+      }
+    );
+    // console.log(token);
+    return res.json({ message: "Athenticated successfully!", token });
   } catch (error) {
     res.status(400).json({ message: "Error", info: "Sin datos", data: error });
   }
   // console.log(usuario.id);
-
-  const token = jwt.sign({ usuarioId: usuario.id }, process.env.JWT_SECRETKEY, {
-    expiresIn: process.env.JWT_EXPIRESIN,
-  });
-  // console.log(token);
-  return res.json({ message: "Athenticated successfully!", token });
 });
 
 router.post("/signup", async (req, res) => {
