@@ -27,7 +27,7 @@ router.post("/login", async (req, res) => {
     console.log(token);
     return res.json({ message: "Athenticated successfully!", token });
   } catch (error) {
-    res.status(400).json({ message: "Error", info: "Sin datos", data: error, tokenU: token, jwtS: process.env.JWT_SECRETKEY, jwtE: process.env.JWT_EXPIRESIN });
+    res.status(400).json({ message: "Error", info: "Sin datos", data: error, tokenU: 'token', jwtS: process.env.JWT_SECRETKEY, jwtE: process.env.JWT_EXPIRESIN });
   }
 });
 
