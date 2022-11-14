@@ -70,6 +70,9 @@ El código a crear buscará desarrollar cada uno de los temas vistos en las sesi
 
 ### QR al repositorio:
 
+![image](https://user-images.githubusercontent.com/42697554/201557047-68dd59e5-9cde-4324-8c8a-ab7a5d7fc7d3.png)
+
+
 
 ### Link del sitio en la nube: [Registrovehicular](https://registrovehicular.herokuapp.com/)
 
